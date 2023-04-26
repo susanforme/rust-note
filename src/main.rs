@@ -1,11 +1,13 @@
 fn main() {
-    let value = fib(30);
-    println!("value is {value}");
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{}' is {}.", s2, len);
 }
 
-fn fib(num: i32) -> i32 {
-    if num == 1 || num == 2 {
-        return 1;
-    }
-    return fib(num - 1) + fib(num - 2);
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len(); // len() 返回字符串的长度
+
+    (s, length)
 }
