@@ -1,19 +1,18 @@
 fn main() {
-    let mut count = 10;
-    // 循环获取返回值
-    let result = 'outside: loop {
-        println!("again!");
-        if count == 0 {
-            // 从循环返回值 循环标签,在多个循环嵌套消除歧义
-            break 'outside (loop {
-                println!("inner!");
-                count += 1;
-                if count / 2 == 0 {
-                    break count;
-                }
-            });
-        }
-        count -= 1;
-    };
-    println!("result is {result}!");
+    let str = String::from("hello world");
+    let mut str2 = String::from("hello world");
+    let len = calculate_len(&str);
+    // 把对象的引用作为参数而不是所有权的转移,使用值
+    println!("len is {}! str is {}!", len, str);
+    change(&mut str2);
+    println!("str2 is {}!", str2);
+}
+
+fn calculate_len(s: &String) -> usize {
+    s.len()
+}
+
+fn change(s: &mut String) {
+    // 不能修改借用的值
+    s.push_str("!");
 }
