@@ -1,23 +1,31 @@
+#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
 }
+// 方法  implementation 缩写
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size,
+        }
+    }
+}
 
 fn main() {
-    // 元组
-    let rect = (32, 10);
-    // 结构体
-    let rect2 = Rectangle {
+    let rec1 = Rectangle {
         width: 32,
+        height: 20,
+    };
+    let rect2 = Rectangle {
+        width: 22,
         height: 10,
     };
-    println!("area is {}", area(rect));
-    println!("area is {}", area2(&rect2));
-}
-fn area(rect: (u32, u32)) -> u32 {
-    rect.0 * rect.1
-}
-
-fn area2(rect: &Rectangle) -> u32 {
-    rect.width * rect.height
+    let rect3 = Rectangle::square(22);
+    println!("rect1 can hole rect2? {}!", rec1.can_hold(&rect2));
+    println!("rect2 can hole rect3? {}!", rec1.can_hold(&rect3));
 }
