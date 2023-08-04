@@ -1,11 +1,25 @@
-fn main() {
-    let i = 100;
-    println!("{}", fib(i));
+struct Point<T> {
+    x: T,
+    y: T,
 }
 
-fn fib(i: i32) -> i32 {
-    if i == 1 || i == 2 {
-        return i;
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
     }
-    return fib(i - 1) + fib(i - 2);
+}
+// 指定限制
+impl Point<f64> {
+    fn only_support_i32(&self) -> f64 {
+        &self.x + &self.y
+    }
+}
+
+fn main() {
+    let p = Point { x: 3, y: 4 };
+    let float = Point { x: 3.5, y: 4.5 };
+    // 只能在f64情况下使用
+    float.only_support_i32();
+    let t = p.x();
+    println!("x is {t}");
 }
