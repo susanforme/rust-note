@@ -1,25 +1,17 @@
-struct Point<T> {
-    x: T,
-    y: T,
-}
-
-impl<T> Point<T> {
-    fn x(&self) -> &T {
-        &self.x
-    }
-}
-// 指定限制
-impl Point<f64> {
-    fn only_support_i32(&self) -> f64 {
-        &self.x + &self.y
-    }
-}
+use std::fmt::Display;
 
 fn main() {
-    let p = Point { x: 3, y: 4 };
-    let float = Point { x: 3.5, y: 4.5 };
-    // 只能在f64情况下使用
-    float.only_support_i32();
-    let t = p.x();
-    println!("x is {t}");
+    let s: &'static str = "hello ";
+}
+
+fn logest_with_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
