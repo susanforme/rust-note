@@ -5,14 +5,13 @@ use std::env;
 use std::process;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
     // let Config {
     //     query: _,
     //     file_path,
     // } = Config::new(&args);
     // 调用宏输出
     // dbg!(&args);
-    let config = Config::build(&args).unwrap_or_else(|err| {
+    let config = Config::build(env::args()).unwrap_or_else(|err| {
         // 打印到标准错误流
         eprintln!("Problem parsing arguments: {err}");
         process::exit(1);
