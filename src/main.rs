@@ -1,27 +1,20 @@
-use std::ops::Deref;
+use std::{cell::RefCell, rc::Rc};
+#[derive(Debug)]
+enum List {
+    Cons(Rc<RefCell<i32>>, Rc<List>),
+    Nil,
+}
 fn main() {
-    let x = 5;
-    let y = MyBox::new(x);
+    let value = Rc::new(RefCell::new(5));
+    // bc 都可以引用 a
+    let a = Rc::new(List::Cons(Rc::clone(&value), Rc::new(List::Nil)));
+    let b = List::Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
+    let c = List::Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
+    // 这里使用了第五章讨论的自动解引用功能
+    *value.borrow_mut() += 10;
 
-    assert_eq!(5, x);
-    // 底层调用等同于  *(y.deref())
-    // Rust 将 * 运算符替换为先调用 deref 方法再进行普通解引用的操作，
-    // 外边的普通解引用仍为必须的原因在于所有权。如果 deref 方法直接返回值而不是值的引用，其值（的所有权）将被移出 self。在这里以及大部分使用解引用运算符的情况下我们并不希望获取 MyBox<T> 内部值的所有权。
-    assert_eq!(5, *y);
-}
-
-struct MyBox<T>(T);
-
-impl<T> MyBox<T> {
-    fn new(x: T) -> MyBox<T> {
-        MyBox(x)
-    }
-}
-
-impl<T> Deref for MyBox<T> {
-    type Target = T;
-    fn deref(&self) -> &Self::Target {
-        // 访问元组结构体的第一个元素
-        &self.0
-    }
+    // 都可以拥有修改后的值15
+    println!("a after = {:?}", a);
+    println!("b after = {:?}", b);
+    println!("c after = {:?}", c);
 }
