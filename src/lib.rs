@@ -1,45 +1,40 @@
-pub trait Draw {
-    // 抽象
-    fn draw(&self);
-}
-pub struct Screen {
-    // trait 对象 Box<dyn Draw> 实现了Draw trait的都可以
-    pub components: Vec<Box<dyn Draw>>,
+pub struct Post {
+    content: String,
 }
 
-pub struct OtherScreen<T: Draw> {
-    pub components: Vec<T>,
+pub struct DraftPost {
+    content: String,
 }
 
-// 使用trait bound
-impl<T> OtherScreen<T>
-where
-    T: Draw,
-{
-    pub fn run(&self) {
-        for component in self.components.iter() {
-            component.draw();
+pub struct PendingReviewPost {
+    content: String,
+}
+
+impl Post {
+    pub fn new() -> DraftPost {
+        DraftPost {
+            content: String::new(),
         }
+    }
+    pub fn content(&self) -> &str {
+        &self.content
     }
 }
 
-impl Screen {
-    pub fn run(&self) {
-        for component in self.components.iter() {
-            component.draw();
+impl DraftPost {
+    pub fn add_text(&mut self, text: &str) {
+        self.content.push_str(text);
+    }
+    pub fn request_review(self) -> PendingReviewPost {
+        PendingReviewPost {
+            content: self.content,
         }
     }
 }
-
-pub struct Button {
-    pub width: u32,
-    pub height: u32,
-    pub label: String,
-}
-
-// 可以各自实现
-impl Draw for Button {
-    fn draw(&self) {
-        // draw
+impl PendingReviewPost {
+    pub fn approve(self) -> Post {
+        Post {
+            content: self.content,
+        }
     }
 }
