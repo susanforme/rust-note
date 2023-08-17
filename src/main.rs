@@ -1,13 +1,19 @@
-#![allow(unused)]
-
-use rust_note::Post;
-
 fn main() {
-    // 不再完全遵守面向对象的状态模式
-    let mut post = Post::new();
+    let origin = Point { x: 0, y: 0, z: 0 };
+    match origin {
+        // .. 模式会忽略模式中剩余的任何没有显式匹配的值部分
+        Point { x, .. } => println!("x is {x}"),
+    }
+    let nums = (1, 2, 3, 4, 5);
+    match nums {
+        (first, .., last) => {
+            println!("some number is {first},{last}");
+        }
+    }
+}
 
-    post.add_text("I ate a salad for lunch today");
-    let post = post.request_review();
-    let post = post.approve();
-    assert_eq!("I ate a salad for lunch today", post.content());
+struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
 }
