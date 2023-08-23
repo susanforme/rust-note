@@ -24,7 +24,7 @@ fn main() {
 fn create_server(port: usize) -> TcpListener {
     match TcpListener::bind(format!("127.0.0.1:{port}")) {
         Ok(l) => {
-            println!("server is running at port {}", port);
+            println!("server is running at http://127.0.0.1:{}", port);
             return l;
         }
         Err(_) => create_server(port + 1),
