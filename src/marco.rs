@@ -1,7 +1,7 @@
 /*
  * @Author: susanforme
  * @Date: 2023-08-23 16:45:59
- * @LastEditTime: 2023-08-23 17:12:12
+ * @LastEditTime: 2023-08-23 17:14:33
  * @FilePath: \rust-note\src\marco.rs
  * @Description:
  */
@@ -34,6 +34,7 @@ macro_rules! pub_enum_str {
       }
 
       impl $name {
+        /// return self name
          pub fn name(&self) -> &'static str {
               match self {
                   $($name::$variant => stringify!($variant)),*
