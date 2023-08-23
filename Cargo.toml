@@ -9,3 +9,7 @@ edition = "2021"
 rand = "0.8.5"
 hello_macro_derive = { path = "./hello_macro/hello_macro_derive" }
 hello_macro = { path = "./hello_macro" }
+json_typegen = "0.7.0"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
